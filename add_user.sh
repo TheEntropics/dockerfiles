@@ -32,6 +32,7 @@ docker run \
     -e container=docker \
     --label "user=${USER_NAME}" \
     --name ${USER_NAME}-user \
+    --restart unless-stopped \
     ubuntu-users
 
 echo "Setting it up"
