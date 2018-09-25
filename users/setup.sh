@@ -39,6 +39,9 @@ systemctl stop ssh
 sed -i "s|#Port 22|Port ${SSH_PORT}|" /etc/ssh/sshd_config
 systemctl start ssh
 
+echo "Setting up sudo"
+sed -i "s|%sudo.*|%sudo ALL=(ALL) NOPASSWD:ALL|" /etc/sudoers
+
 echo "Creating user"
 useradd \
     --home-dir /home/${USER_NAME} \
