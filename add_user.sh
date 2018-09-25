@@ -22,7 +22,7 @@ fi
 
 echo "Creating the container"
 docker run \
-    -d --rm -it \
+    -d -it \
     -v /volumes/homes/${USER_NAME}:/home \
     -v /sys/fs/cgroup:/sys/fs/cgroup \
     --tmpfs /run --tmpfs /run/lock \
