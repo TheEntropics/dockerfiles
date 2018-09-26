@@ -1,0 +1,57 @@
+docker.serben.tk {
+    errors /root/.caddy/logs/docker.error.log
+    log /root/.caddy/logs/docker.access.log
+    proxy /api/websocket 172.18.0.2:9000 {
+        websocket
+    }
+    proxy / 172.18.0.2:9000 {
+        transparent
+    }
+}
+
+torrent.new.serben.tk {
+    errors /root/.caddy/logs/torrent.error.log
+    log /root/.caddy/logs/torrent.access.log
+    proxy / 172.18.0.4:3000 {
+        transparent
+    }
+}
+
+downloads.new.serben.tk {
+    errors /root/.caddy/logs/downloads.error.log
+    log /root/.caddy/logs/downloads.access.log
+    filemanager / /torrent/torrents {
+        database /root/.caddy/filemanager/downloads.serben.tk.db
+        allow_commands false
+    }
+}
+
+phpmyadmin.new.serben.tk {
+    errors /root/.caddy/logs/phpmyadmin.error.log
+    log /root/.caddy/logs/phpmyadmin.access.log
+    proxy / 172.18.0.7:80 {
+        transparent
+    }
+}
+
+*.new.serben.tk {
+    tls {
+        dns cloudflare
+    }
+    browse /
+    root /volumes/homes
+    rewrite / {
+        to /{label1}/{label1}/public_html/{path}
+    }
+    errors /root/.caddy/logs/generic.error.log
+    log /root/.caddy/logs/generic.access.log
+    fastcgi / 127.0.0.1:9000 php {
+        env CLOUDFLARE_API_KEY hidden
+        env DOCUMENT_ROOT /volumes/homes/{label1}/{label1}
+        env DOCUMENT_URI {path}
+        env REQUEST_URI {path}
+        env SCRIPT_NAME {path}
+        env PHP_SELF {path}
+    }
+    on startup php-fpm7
+}
