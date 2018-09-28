@@ -1,4 +1,18 @@
+(common) {
+    errors {
+        404 /root/.caddy/404.html
+    }
+}
+
+new.serben.tk {
+    import common
+    errors /root/.caddy/logs/docker.error.log
+    log /root/.caddy/logs/docker.access.log
+    root /srv
+}
+
 docker.serben.tk {
+    import common
     errors /root/.caddy/logs/docker.error.log
     log /root/.caddy/logs/docker.access.log
     proxy /api/websocket 172.18.0.2:9000 {
@@ -10,6 +24,7 @@ docker.serben.tk {
 }
 
 torrent.new.serben.tk {
+    import common
     errors /root/.caddy/logs/torrent.error.log
     log /root/.caddy/logs/torrent.access.log
     proxy / 172.18.0.4:3000 {
@@ -18,6 +33,7 @@ torrent.new.serben.tk {
 }
 
 downloads.new.serben.tk {
+    import common
     errors /root/.caddy/logs/downloads.error.log
     log /root/.caddy/logs/downloads.access.log
     filemanager / /torrent/torrents {
@@ -27,6 +43,7 @@ downloads.new.serben.tk {
 }
 
 phpmyadmin.new.serben.tk {
+    import common
     errors /root/.caddy/logs/phpmyadmin.error.log
     log /root/.caddy/logs/phpmyadmin.access.log
     proxy / 172.18.0.7:80 {
@@ -35,6 +52,7 @@ phpmyadmin.new.serben.tk {
 }
 
 *.new.serben.tk {
+    import common
     tls {
         dns cloudflare
     }
