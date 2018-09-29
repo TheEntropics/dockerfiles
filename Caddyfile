@@ -73,3 +73,8 @@ phpmyadmin.new.serben.tk {
     }
     on startup php-fpm7
 }
+
+*:80 {
+    import common
+    root /404
+}
