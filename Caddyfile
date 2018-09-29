@@ -4,7 +4,38 @@
     }
 }
 
-new.serben.tk {
+new.serben.tk, www.serben.tk {
+    redir https://serben.tk{uri}
+}
+
+andrei.serben.tk {
+    redir https://gion.serben.tk{uri}
+}
+edoardo.serben.tk {
+    redir https://edomora97.serben.tk{uri}
+}
+badin.serben.tk {
+    redir https://badinl.serben.tk{uri}
+}
+giorgio.serben.tk {
+    redir https://dabolus.serben.tk{uri}
+}
+sergiu.serben.tk {
+    redir https://vidrez.serben.tk{uri}
+}
+
+serben.ga {
+    redir / https://serben.tk{uri} 307
+}
+
+*.serben.ga {
+    tls {
+        dns cloudflare
+    }
+    redir / https://{label1}.serben.tk{uri} 307
+}
+
+serben.tk {
     import common
     errors /root/.caddy/logs/docker.error.log
     log /root/.caddy/logs/docker.access.log
@@ -23,7 +54,7 @@ docker.serben.tk {
     }
 }
 
-torrent.new.serben.tk {
+torrent.serben.tk {
     import common
     errors /root/.caddy/logs/torrent.error.log
     log /root/.caddy/logs/torrent.access.log
@@ -32,7 +63,7 @@ torrent.new.serben.tk {
     }
 }
 
-downloads.new.serben.tk {
+downloads.serben.tk {
     import common
     errors /root/.caddy/logs/downloads.error.log
     log /root/.caddy/logs/downloads.access.log
@@ -42,7 +73,7 @@ downloads.new.serben.tk {
     }
 }
 
-phpmyadmin.new.serben.tk {
+phpmyadmin.serben.tk {
     import common
     errors /root/.caddy/logs/phpmyadmin.error.log
     log /root/.caddy/logs/phpmyadmin.access.log
@@ -51,16 +82,9 @@ phpmyadmin.new.serben.tk {
     }
 }
 
-*.new.serben.tk {
+(user) {
     import common
-    tls {
-        dns cloudflare
-    }
     browse /
-    root /volumes/homes
-    rewrite / {
-        to /{label1}/{label1}/public_html/{path}
-    }
     errors /root/.caddy/logs/generic.error.log
     log /root/.caddy/logs/generic.access.log
     fastcgi / 127.0.0.1:9000 php {
@@ -72,6 +96,54 @@ phpmyadmin.new.serben.tk {
         env PHP_SELF {path}
     }
     on startup php-fpm7
+}
+
+edomora97.serben.tk {
+    root /volumes/homes/edomora97/edomora97/public_html
+    import user
+}
+
+gion.serben.tk {
+    root /volumes/homes/gion/gion/public_html
+    import user
+}
+
+cive.serben.tk {
+    root /volumes/homes/cive/cive/public_html
+    import user
+}
+
+badinl.serben.tk {
+    root /volumes/homes/badinl/badinl/public_html
+    import user
+}
+
+rossi.serben.tk {
+    root /volumes/homes/rossi/rossi/public_html
+    import user
+}
+
+vidrez.serben.tk {
+    root /volumes/homes/vidrez/vidrez/public_html
+    import user
+}
+
+furlan.serben.tk {
+    root /volumes/homes/furlan/furlan/public_html
+    import user
+}
+
+dabolus.serben.tk {
+    root /volumes/homes/dabolus/dabolus/public_html
+    import user
+}
+
+*.serben.tk, *.new.serben.tk {
+    tls {
+        dns cloudflare
+    }
+    import common
+    root /404
 }
 
 *:80 {
