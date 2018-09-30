@@ -82,6 +82,14 @@ phpmyadmin.serben.tk {
     }
 }
 
+openarena.serben.tk {
+    import common
+    browse /
+    errors /root/.caddy/logs/generic.error.log
+    log /root/.caddy/logs/generic.access.log
+    root /volumes/openarena
+}
+
 (user) {
     import common
     browse /
