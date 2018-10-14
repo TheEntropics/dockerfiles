@@ -58,7 +58,7 @@ torrent.serben.tk {
     import common
     errors /root/.caddy/logs/torrent.error.log
     log /root/.caddy/logs/torrent.access.log
-    proxy / 172.18.0.4:3000 {
+    proxy / serben.tk:3000 {
         transparent
     }
 }
@@ -71,6 +71,14 @@ downloads.serben.tk {
         database /root/.caddy/filemanager/downloads.serben.tk.db
         allow_commands false
     }
+}
+
+download.serben.tk {
+    import common
+    errors /root/.caddy/logs/download.error.log
+    log /root/.caddy/logs/download.access.log
+    root /torrent
+    browse
 }
 
 phpmyadmin.serben.tk {
@@ -88,6 +96,14 @@ openarena.serben.tk {
     errors /root/.caddy/logs/generic.error.log
     log /root/.caddy/logs/generic.access.log
     root /volumes/openarena
+}
+
+status.serben.tk {
+    redir https://p.datadoghq.com/sb/a2ba14d75-e14f697f19
+}
+
+status.docker.serben.tk {
+    redir https://p.datadoghq.com/sb/a2ba14d75-d9ce6c93a86ee51e45da444da2cc0896
 }
 
 (user) {
